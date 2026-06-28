@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block title %}History | Flood Prediction System{% endblock %}
+{% block content %}
+<div class="page-title">
+  <h1>Prediction History</h1>
+  <p>Review past weather inputs and flood classifications</p>
+</div>
+
+<div class="card">
+  {% if records %}
+  <table>
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Temp</th>
+        <th>Humidity</th>
+        <th>Cloud Cover</th>
+        <th>Annual Rainfall</th>
+        <th>Seasonal Rainfall</th>
+        <th>Result</th>
+        <th>Probability</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for weather, prediction in records %}
+      <tr>
+        <td>{{ weather.created_at.strftime('%Y-%m-%d %H:%M') if weather.created_at else 'N/A' }}</td>
+        <td>{{ weather.temperature }}</td>
+        <td>{{ weather.humidity }}</td>
+        <td>{{ weather.cloud_visibility }}</td>
+        <td>{{ weather.annual_rainfall }}</td>
+        <td>{{ weather.seasonal_rainfall }}</td>
+        <td>
+          {% if prediction %}
+          <span class="badge {{ 'badge-flood' if prediction.flood_result == 'Flood' else 'badge-safe' }}">
+            {{ prediction.flood_result }}
+          </span>
+          {% else %}
+          —
+          {% endif %}
+        </td>
+        <td>
+          {% if prediction %}
+          {{ (prediction.flood_probability * 100)|round(2) }}%
+          {% else %}
+          —
+          {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <p style="color:var(--muted);">No prediction history yet.</p>
+  <a class="btn btn-primary" href="{{ url_for('predict') }}">Make First Prediction</a>
+  {% endif %}
+</div>
+{% endblock %}

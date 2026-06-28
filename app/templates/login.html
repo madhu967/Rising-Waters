@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Login | Flood Prediction System{% endblock %}
+{% block content %}
+<div class="auth-container">
+  <div class="card">
+    <div class="page-title">
+      <h1>Sign In</h1>
+      <p>Access the flood prediction dashboard</p>
+    </div>
+    <form method="POST">
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required placeholder="you@example.com">
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required>
+      </div>
+      <button type="submit" class="btn btn-primary" style="width:100%;">Login</button>
+    </form>
+    <p style="margin-top:1rem; text-align:center;">
+      No account? <a href="{{ url_for('register') }}">Register here</a>
+    </p>
+  </div>
+</div>
+{% endblock %}

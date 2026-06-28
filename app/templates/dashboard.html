@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %}Dashboard | Flood Prediction System{% endblock %}
+{% block content %}
+<div class="page-title">
+  <h1>Welcome, {{ user.name }}</h1>
+  <p>Role: {{ user.role }} &mdash; Monitor flood risk and manage predictions</p>
+</div>
+
+<div class="grid grid-3" style="margin-bottom:2rem;">
+  <div class="card stat-card">
+    <div class="value">{{ recent|length }}</div>
+    <div class="label">Recent Predictions</div>
+  </div>
+  {% if model_record %}
+  <div class="card stat-card">
+    <div class="value">{{ (model_record.accuracy * 100)|round(2) }}%</div>
+    <div class="label">Active Model Accuracy</div>
+  </div>
+  <div class="card stat-card">
+    <div class="value">{{ model_record.algorithm_type }}</div>
+    <div class="label">Best Algorithm</div>
+  </div>
+  {% endif %}
+</div>
+
+<div class="grid grid-2">
+  <div class="card">
+    <h3>Quick Actions</h3>
+    <p style="margin-bottom:1rem;">Enter weather readings to get an instant flood risk assessment.</p>
+    <a class="btn btn-primary" href="{{ url_for('predict') }}">New Prediction</a>
+    <a class="btn btn-primary" href="{{ url_for('history') }}" style="margin-left:0.5rem;">View History</a>
+  </div>
+  <div class="card">
+    <h3>Recent Activity</h3>
+    {% if recent %}
+    <table>
+      <thead>
+        <tr><th>Date</th><th>Temp</th><th>Rainfall</th></tr>
+      </thead>
+      <tbody>
+        {% for w in recent %}
+        <tr>
+          <td>{{ w.created_at.strftime('%Y-%m-%d %H:%M') if w.created_at else 'N/A' }}</td>
+          <td>{{ w.temperature }}°C</td>
+          <td>{{ w.annual_rainfall }} mm</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <p style="color:var(--muted);">No predictions yet. Start with a new prediction.</p>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

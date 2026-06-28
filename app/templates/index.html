@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}Home | Flood Prediction System{% endblock %}
+{% block content %}
+<section class="hero">
+  <h1>Machine Learning Flood Prediction System</h1>
+  <p>
+    Analyse meteorological data using Decision Tree, Random Forest, KNN, and XGBoost
+    to deliver timely flood risk predictions for authorities and disaster management teams.
+  </p>
+  <div style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap;">
+    <a class="btn btn-light" href="{{ url_for('register') }}">Get Started</a>
+    <a class="btn btn-outline" href="{{ url_for('login') }}">Sign In</a>
+  </div>
+</section>
+
+<div class="container" style="margin-top:2rem;">
+  <div class="grid grid-3" style="margin-bottom:2rem;">
+    <div class="card stat-card">
+      <div class="value">95.65%</div>
+      <div class="label">Best Model Test Accuracy</div>
+    </div>
+    <div class="card stat-card">
+      <div class="value">4</div>
+      <div class="label">ML Algorithms Compared</div>
+    </div>
+    <div class="card stat-card">
+      <div class="value">Real-time</div>
+      <div class="label">Flood Risk Classification</div>
+    </div>
+  </div>
+
+  <h2 style="margin-bottom:1.25rem;">Operational Scenarios</h2>
+  <div class="grid grid-3">
+    <div class="card scenario-card">
+      <h3>Scenario 1: Early Warning</h3>
+      <p>A meteorologist enters rainfall and cloud visibility readings. The model predicts flood probability, enabling evacuation advisories hours in advance.</p>
+    </div>
+    <div class="card scenario-card">
+      <h3>Scenario 2: Resource Allocation</h3>
+      <p>Disaster coordinators monitor multiple regions by entering regional weather data and receive instant flood risk classifications to prioritise deployment.</p>
+    </div>
+    <div class="card scenario-card">
+      <h3>Scenario 3: Model Validation</h3>
+      <p>Government analysts evaluate model accuracy against historical flood events. XGBoost achieves 96.55% accuracy on test data.</p>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block title %}Predict | Flood Prediction System{% endblock %}
+{% block content %}
+<div class="page-title">
+  <h1>Flood Risk Prediction</h1>
+  <p>Enter meteorological readings for the flood-prone district</p>
+</div>
+
+<div class="grid grid-2">
+  <div class="card">
+    <h3>Weather Input</h3>
+    <form method="POST">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="temperature">Temperature (°C)</label>
+          <input type="number" step="0.1" id="temperature" name="temperature" required placeholder="29" min="0" max="50">
+        </div>
+        <div class="form-group">
+          <label for="humidity">Humidity (%)</label>
+          <input type="number" step="0.1" id="humidity" name="humidity" required placeholder="74" min="0" max="100">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="cloud_visibility">Cloud Cover / Visibility</label>
+          <input type="number" step="0.1" id="cloud_visibility" name="cloud_visibility" required placeholder="36" min="0" max="100">
+        </div>
+        <div class="form-group">
+          <label for="annual_rainfall">Annual Rainfall (mm)</label>
+          <input type="number" step="0.1" id="annual_rainfall" name="annual_rainfall" required placeholder="3200" min="0">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="seasonal_rainfall">Seasonal Rainfall - Jun-Sep (mm)</label>
+        <input type="number" step="0.1" id="seasonal_rainfall" name="seasonal_rainfall" required placeholder="1800" min="0">
+      </div>
+      <button type="submit" class="btn btn-primary">Analyse Flood Risk</button>
+    </form>
+  </div>
+
+  <div class="card">
+    <h3>Active Model</h3>
+    {% if model_record %}
+    <p><strong>Name:</strong> {{ model_record.model_name }}</p>
+    <p><strong>Algorithm:</strong> {{ model_record.algorithm_type }}</p>
+    <p><strong>Accuracy:</strong> {{ (model_record.accuracy * 100)|round(2) }}%</p>
+    {% else %}
+    <p class="alert alert-warning">No model loaded. Run train_model.py first.</p>
+    {% endif %}
+
+    {% if result %}
+    <div class="result-banner {{ 'result-flood' if result.flood_result == 'Flood' else 'result-safe' }}">
+      <h2>{{ result.flood_result }}</h2>
+      <div class="probability">{{ result.flood_probability }}%</div>
+      <p>Flood Probability Score</p>
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}
