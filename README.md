@@ -51,17 +51,4 @@ Source: [Kaggle — Rainfall Dataset](https://www.kaggle.com/arbethi/rainfall-da
 
 Features used: Temperature, Humidity, Cloud Cover, Annual Rainfall, Seasonal Rainfall (Jun-Sep).
 
-## IBM Cloud Deployment
 
-Set environment variables before deployment:
-
-```bash
-export SECRET_KEY=your-production-secret
-export DATABASE_URL=postgresql://user:pass@host/dbname
-```
-
-Use `gunicorn` or IBM Cloud Foundry with a `Procfile`:
-
-```
-web: gunicorn run:app
-```
